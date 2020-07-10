@@ -1,12 +1,12 @@
 package tw.lychee.githubuserlistdemo.ui.profile
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import tw.lychee.githubuserlistdemo.R
+import tw.lychee.githubuserlistdemo.databinding.UserProfileFragmentBinding
+import tw.lychee.githubuserlistdemo.utils.ViewModelFactory
 
 private const val ARG_LOGIN_ID = "ARG_LOGIN_ID"
 class UserProfileFragment : Fragment() {
@@ -19,6 +19,7 @@ class UserProfileFragment : Fragment() {
         }
     }
 
+    private lateinit var viewDataBinding: UserProfileFragmentBinding
     private lateinit var viewModel: UserProfileViewModel
 
     private val loginId: String by lazy {
@@ -29,13 +30,18 @@ class UserProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.user_profile_fragment, container, false)
+        viewDataBinding = UserProfileFragmentBinding.inflate(inflater, container, false)
+        return viewDataBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(UserProfileViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel = ViewModelFactory.getInstance(requireContext().applicationContext)
+            .create(UserProfileViewModel::class.java)
+        viewDataBinding.viewModel = viewModel
+        viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
+
+        viewModel.init(loginId)
     }
 
 }

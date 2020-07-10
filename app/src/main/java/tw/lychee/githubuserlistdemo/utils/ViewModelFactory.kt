@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import tw.lychee.githubuserlistdemo.repository.DummyRepository
 import tw.lychee.githubuserlistdemo.repository.GithubRepository
 import tw.lychee.githubuserlistdemo.repository.Repository
+import tw.lychee.githubuserlistdemo.ui.profile.UserProfileViewModel
 import tw.lychee.githubuserlistdemo.ui.users.UserModelFactory
 import tw.lychee.githubuserlistdemo.ui.users.UsersViewModel
 
@@ -18,6 +19,8 @@ class ViewModelFactory private constructor(private val repository: Repository) :
                 isAssignableFrom(UsersViewModel::class.java) ->
                     UsersViewModel(UserModelFactory(repository))
 
+                isAssignableFrom(UserProfileViewModel::class.java) ->
+                    UserProfileViewModel()
 
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

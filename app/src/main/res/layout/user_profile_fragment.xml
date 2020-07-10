@@ -3,6 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="tw.lychee.githubuserlistdemo.ui.profile.UserProfileViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,6 +31,7 @@
             android:id="@+id/avatar"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:avatarUrl="@{viewModel.userProfile.avatarUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,12 +53,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{viewModel.userProfile.name}"
                 android:textSize="@dimen/text_size_profile_name"
                 tools:text="Demo User" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{viewModel.userProfile.bio}"
                 android:textSize="@dimen/text_size_profile_name"
                 tools:text="bio" />
         </LinearLayout>
@@ -90,6 +103,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{viewModel.userProfile.login}"
                         android:textSize="@dimen/text_size_normal"
                         tools:text="Demo User" />
 
@@ -103,7 +117,8 @@
                         android:paddingHorizontal="8dp"
                         android:text="@string/staff"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_badge" />
+                        android:textSize="@dimen/text_size_badge"
+                        android:visibility="@{viewModel.userProfile.siteAdmin ? View.VISIBLE : View.INVISIBLE}" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -122,6 +137,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.userProfile.location}"
                     android:textSize="@dimen/text_size_normal"
                     tools:text="Location" />
 
@@ -142,6 +158,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.userProfile.blog}"
                     android:textColor="@color/link_color"
                     android:textSize="@dimen/text_size_normal"
                     tools:text="https://demo.tv" />

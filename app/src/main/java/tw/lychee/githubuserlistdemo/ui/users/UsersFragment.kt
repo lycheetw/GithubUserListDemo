@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.main_activity.view.*
 import tw.lychee.githubuserlistdemo.R
 import tw.lychee.githubuserlistdemo.databinding.UsersFragmentBinding
 import tw.lychee.githubuserlistdemo.ui.profile.UserProfileFragment
@@ -51,6 +50,7 @@ class UsersFragment : Fragment() {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.container, UserProfileFragment.newInstance(value))
+                    .addToBackStack(UsersFragment::class.java.name)
                     .commitAllowingStateLoss()
             }
         })
