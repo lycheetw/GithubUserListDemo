@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tw.lychee.githubuserlistdemo.BR
 import tw.lychee.githubuserlistdemo.R
+import tw.lychee.githubuserlistdemo.model.UserModel
 
-class UsersAdapter() : PagedListAdapter<String, UsersAdapter.ViewHolder>(
+class UsersAdapter() : PagedListAdapter<UserModel, UsersAdapter.ViewHolder>(
     DiffCallback
 ) {
 
@@ -42,13 +43,16 @@ class UsersAdapter() : PagedListAdapter<String, UsersAdapter.ViewHolder>(
     }
 
 
-    companion object DiffCallback : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
+    companion object DiffCallback : DiffUtil.ItemCallback<UserModel>() {
+        override fun areItemsTheSame(oldItem: UserModel, newItem: UserModel): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
+        override fun areContentsTheSame(oldItem: UserModel, newItem: UserModel): Boolean {
+            return oldItem.id == newItem.id &&
+                    oldItem.login == newItem.login &&
+                    oldItem.siteAdmin == newItem.siteAdmin &&
+                    oldItem.avatarUrl == newItem.avatarUrl
         }
     }
 }
