@@ -7,8 +7,7 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import tw.lychee.githubuserlistdemo.model.UserModel
 
-class UsersViewModel : ViewModel() {
-    private val userModelFactory = UserModelFactory()
+class UsersViewModel(private val userModelFactory: UserModelFactory) : ViewModel() {
     val users: LiveData<PagedList<UserModel>> by lazy {
         userModelFactory.toLiveData(20, null)
     }

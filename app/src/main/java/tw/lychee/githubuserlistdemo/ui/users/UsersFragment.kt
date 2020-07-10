@@ -1,6 +1,5 @@
 package tw.lychee.githubuserlistdemo.ui.users
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import tw.lychee.githubuserlistdemo.databinding.UsersFragmentBinding
+import tw.lychee.githubuserlistdemo.utils.ViewModelFactory
 
 class UsersFragment : Fragment() {
 
@@ -16,8 +16,8 @@ class UsersFragment : Fragment() {
         fun newInstance() = UsersFragment()
     }
 
-    private lateinit var viewModel: UsersViewModel
     private lateinit var viewDataBinding: UsersFragmentBinding
+    private lateinit var viewModel: UsersViewModel
     private lateinit var adapter: UsersAdapter
 
     override fun onCreateView(
@@ -30,14 +30,15 @@ class UsersFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(UsersViewModel::class.java)
-        viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
+        viewModel = ViewModelFactory.getInstance(requireContext().applicationContext)
+            .create(UsersViewModel::class.java)
         viewDataBinding.viewModel = viewModel
-
+        viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
 
         adapter = UsersAdapter()
         viewDataBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         viewDataBinding.recyclerView.adapter = adapter
+
         viewModel.users.observe(this.viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
