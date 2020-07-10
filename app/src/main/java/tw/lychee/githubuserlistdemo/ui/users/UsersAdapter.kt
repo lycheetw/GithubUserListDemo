@@ -11,7 +11,7 @@ import tw.lychee.githubuserlistdemo.BR
 import tw.lychee.githubuserlistdemo.R
 import tw.lychee.githubuserlistdemo.model.UserModel
 
-class UsersAdapter() : PagedListAdapter<UserModel, UsersAdapter.ViewHolder>(
+class UsersAdapter(private val viewModel: UsersViewModel) : PagedListAdapter<UserModel, UsersAdapter.ViewHolder>(
     DiffCallback
 ) {
 
@@ -27,6 +27,7 @@ class UsersAdapter() : PagedListAdapter<UserModel, UsersAdapter.ViewHolder>(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.bindVariable(BR.userModel, item)
+        holder.bindVariable(BR.viewModel, viewModel)
 
         holder.executePendingBindings()
     }

@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.main_activity.view.*
+import tw.lychee.githubuserlistdemo.R
 import tw.lychee.githubuserlistdemo.databinding.UsersFragmentBinding
+import tw.lychee.githubuserlistdemo.ui.profile.UserProfileFragment
 import tw.lychee.githubuserlistdemo.utils.ViewModelFactory
 
 class UsersFragment : Fragment() {
@@ -35,7 +38,7 @@ class UsersFragment : Fragment() {
         viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
 
-        adapter = UsersAdapter()
+        adapter = UsersAdapter(viewModel)
         viewDataBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         viewDataBinding.recyclerView.adapter = adapter
 
@@ -43,6 +46,14 @@ class UsersFragment : Fragment() {
             adapter.submitList(it)
         })
 
+        viewModel.selectEvent.observe(this.viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { value ->
+                requireActivity().supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, UserProfileFragment.newInstance(value))
+                    .commitAllowingStateLoss()
+            }
+        })
     }
 
 }
