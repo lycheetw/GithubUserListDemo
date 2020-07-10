@@ -70,7 +70,7 @@
                     android:text="@string/staff"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_badge"
-                    android:visibility="@{userModel.siteAdmin ? View.VISIBLE : View.INVISIBLE}" />
+                    android:visibility="@{userModel.siteAdmin ? View.VISIBLE : View.GONE}" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
