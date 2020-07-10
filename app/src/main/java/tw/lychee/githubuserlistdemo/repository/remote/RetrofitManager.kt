@@ -13,6 +13,7 @@ object RetrofitManager {
         addInterceptor { chain ->
             val requestBuilder = chain.request().newBuilder()
             if (Constants.TOKEN.isNotEmpty()) {
+                requestBuilder.addHeader("Accept", "application/vnd.github.v3+json")
                 requestBuilder.addHeader("Authorization", "token ${Constants.TOKEN}")
             }
             chain.proceed(requestBuilder.build())
