@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import tw.lychee.githubuserlistdemo.databinding.UsersFragmentBinding
 
 class UsersFragment : Fragment() {
@@ -16,6 +18,7 @@ class UsersFragment : Fragment() {
 
     private lateinit var viewModel: UsersViewModel
     private lateinit var viewDataBinding: UsersFragmentBinding
+    private lateinit var adapter: UsersAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +33,14 @@ class UsersFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(UsersViewModel::class.java)
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         viewDataBinding.viewModel = viewModel
+
+
+        adapter = UsersAdapter()
+        viewDataBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        viewDataBinding.recyclerView.adapter = adapter
+        viewModel.users.observe(this.viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+        })
 
     }
 
