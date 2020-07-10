@@ -19,8 +19,8 @@ class UsersFragment : Fragment() {
     }
 
     private lateinit var viewDataBinding: UsersFragmentBinding
-    private lateinit var viewModel: UsersViewModel
-    private lateinit var adapter: UsersAdapter
+    private val viewModel: UsersViewModel get() = viewDataBinding.viewModel!!
+    private val adapter: UsersAdapter get() = viewDataBinding.recyclerView.adapter as UsersAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,20 +32,26 @@ class UsersFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelFactory.getInstance(requireContext().applicationContext)
+
+        viewDataBinding.viewModel = ViewModelFactory.getInstance(requireContext().applicationContext)
             .create(UsersViewModel::class.java)
-        viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
 
-        adapter = UsersAdapter(viewModel)
-        viewDataBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        viewDataBinding.recyclerView.adapter = adapter
+        with(viewDataBinding.recyclerView) {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = UsersAdapter(viewModel)
+            setHasFixedSize(true)
+        }
 
+        setListeners()
+    }
+
+    private fun setListeners() {
         viewDataBinding.swipeRefreshLayout.setOnRefreshListener {
             viewDataBinding.swipeRefreshLayout.isRefreshing = false
             viewModel.refresh()
         }
-        
+
         viewModel.users.observe(this.viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
@@ -60,5 +66,4 @@ class UsersFragment : Fragment() {
             }
         })
     }
-
 }

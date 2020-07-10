@@ -25,7 +25,7 @@ class UserProfileFragment : Fragment() {
     }
 
     private lateinit var viewDataBinding: UserProfileFragmentBinding
-    private lateinit var viewModel: UserProfileViewModel
+    private val viewModel: UserProfileViewModel get() = viewDataBinding.viewModel!!
 
     private val loginId: String by lazy {
         arguments!!.getString(ARG_LOGIN_ID, "")
@@ -41,12 +41,18 @@ class UserProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelFactory.getInstance(requireContext().applicationContext)
+
+        viewDataBinding.viewModel = ViewModelFactory.getInstance(requireContext().applicationContext)
             .create(UserProfileViewModel::class.java)
-        viewDataBinding.viewModel = viewModel
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
 
         viewModel.init(loginId)
+
+        setListeners()
+
+    }
+
+    private fun setListeners() {
         viewModel.closeEvent.observe(this.viewLifecycleOwner, Observer { event ->
             event.getContentIfNotHandled()?.let { _ ->
                 requireActivity().onBackPressed()
