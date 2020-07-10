@@ -41,6 +41,11 @@ class UsersFragment : Fragment() {
         viewDataBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         viewDataBinding.recyclerView.adapter = adapter
 
+        viewDataBinding.swipeRefreshLayout.setOnRefreshListener {
+            viewDataBinding.swipeRefreshLayout.isRefreshing = false
+            viewModel.refresh()
+        }
+        
         viewModel.users.observe(this.viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })

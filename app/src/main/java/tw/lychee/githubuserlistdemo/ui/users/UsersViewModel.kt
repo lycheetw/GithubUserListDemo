@@ -24,4 +24,8 @@ class UsersViewModel(private val userModelFactory: UserModelFactory) : ViewModel
     fun onSelect(user: UserModel) {
         _selectEvent.value = Event(user.login)
     }
+
+    fun refresh() {
+        users.value?.dataSource?.invalidate()
+    }
 }
