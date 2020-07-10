@@ -2,11 +2,16 @@ package tw.lychee.githubuserlistdemo
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 
 object DataBindings {
     @JvmStatic
     @BindingAdapter("avatarUrl")
-    fun loadAvatar(view: ImageView, avatarUrl: String) {
-        //TODO: Load image
+    fun loadAvatar(view: ImageView, avatarUrl: String?) {
+        print(avatarUrl)
+        Glide.with(view)
+            .load(avatarUrl)
+            .circleCrop()
+            .into(view)
     }
 }
