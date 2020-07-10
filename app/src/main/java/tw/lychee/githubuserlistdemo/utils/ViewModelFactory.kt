@@ -20,7 +20,7 @@ class ViewModelFactory private constructor(private val repository: Repository) :
                     UsersViewModel(UserModelFactory(repository))
 
                 isAssignableFrom(UserProfileViewModel::class.java) ->
-                    UserProfileViewModel()
+                    UserProfileViewModel(repository)
 
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
