@@ -17,7 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/horizontal_margin"
-        android:paddingVertical="@dimen/vertical_margin">
+        android:paddingVertical="@dimen/vertical_margin"
+        android:background="@color/white"
+        android:onClick="@{null}">
 
         <ImageView
             android:layout_width="48dp"

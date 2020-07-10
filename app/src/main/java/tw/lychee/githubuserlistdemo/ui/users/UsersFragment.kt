@@ -54,7 +54,7 @@ class UsersFragment : Fragment() {
             event.getContentIfNotHandled()?.let { value ->
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.container, UserProfileFragment.newInstance(value))
+                    .add(R.id.container, UserProfileFragment.newInstance(value))
                     .addToBackStack(UsersFragment::class.java.name)
                     .commitAllowingStateLoss()
             }
