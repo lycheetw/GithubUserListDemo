@@ -8,7 +8,6 @@ object DataBindings {
     @JvmStatic
     @BindingAdapter("avatarUrl")
     fun loadAvatar(view: ImageView, avatarUrl: String?) {
-        print(avatarUrl)
         Glide.with(view)
             .load(avatarUrl)
             .circleCrop()

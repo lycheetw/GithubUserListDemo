@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import tw.lychee.githubuserlistdemo.repository.DummyRepository
+import tw.lychee.githubuserlistdemo.repository.GithubRepository
 import tw.lychee.githubuserlistdemo.repository.Repository
 import tw.lychee.githubuserlistdemo.ui.users.UserModelFactory
 import tw.lychee.githubuserlistdemo.ui.users.UsersViewModel
@@ -31,7 +32,7 @@ class ViewModelFactory private constructor(private val repository: Repository) :
         fun getInstance(context: Context): ViewModelFactory {
             if (INSTANCE == null) {
                 synchronized(ViewModelFactory::javaClass) {
-                    val repository = DummyRepository()
+                    val repository = GithubRepository()
                     INSTANCE = ViewModelFactory(repository)
                 }
             }

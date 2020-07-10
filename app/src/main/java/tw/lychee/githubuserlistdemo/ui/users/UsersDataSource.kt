@@ -15,8 +15,12 @@ class UsersDataSource(private val repository: Repository) : PositionalDataSource
         Log.d(TAG, "load $begin ~ $end")
 
         runBlocking {
-            val list = repository.fetchUsers(begin, params.loadSize)
-            callback.onResult(list)
+            try {
+                val list = repository.fetchUsers(begin, params.loadSize)
+                callback.onResult(list)
+            } catch (e: Exception) {
+
+            }
         }
     }
 
@@ -26,8 +30,12 @@ class UsersDataSource(private val repository: Repository) : PositionalDataSource
         Log.d(TAG, "load $begin ~ $end")
 
         runBlocking {
-            val list = repository.fetchUsers(begin, params.pageSize)
-            callback.onResult(list, 0, 100)
+            try {
+                val list = repository.fetchUsers(begin, params.pageSize)
+                callback.onResult(list, 0, 100)
+            } catch (e: Exception) {
+
+            }
         }
     }
 
