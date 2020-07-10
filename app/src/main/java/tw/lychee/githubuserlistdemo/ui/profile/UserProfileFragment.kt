@@ -1,12 +1,17 @@
 package tw.lychee.githubuserlistdemo.ui.profile
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import tw.lychee.githubuserlistdemo.databinding.UserProfileFragmentBinding
 import tw.lychee.githubuserlistdemo.utils.ViewModelFactory
+import java.lang.Exception
+
 
 private const val ARG_LOGIN_ID = "ARG_LOGIN_ID"
 class UserProfileFragment : Fragment() {
@@ -42,6 +47,23 @@ class UserProfileFragment : Fragment() {
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
 
         viewModel.init(loginId)
+        viewModel.closeEvent.observe(this.viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { _ ->
+                requireActivity().onBackPressed()
+            }
+        })
+
+        viewModel.openLinkEvent.observe(this.viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { url ->
+                try {
+                    val browserIntent =
+                        Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    startActivity(browserIntent)
+                } catch (e: Exception) {
+
+                }
+            }
+        })
     }
 
 }

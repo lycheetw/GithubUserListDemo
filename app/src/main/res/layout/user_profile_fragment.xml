@@ -25,7 +25,8 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_close"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{(v) -> viewModel.onClose()}"/>
 
         <ImageView
             android:id="@+id/avatar"
@@ -147,7 +148,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:onClick="@{(v) -> viewModel.onOpenLink(viewModel.userProfile.blog)}">
 
                 <ImageView
                     android:layout_width="48dp"
@@ -162,7 +164,7 @@
                     android:text="@{viewModel.userProfile.blog}"
                     android:textColor="@color/link_color"
                     android:textSize="@dimen/text_size_normal"
-                    tools:text="https://demo.tv" />
+                    tools:text="https://demo.tv"/>
             </LinearLayout>
         </LinearLayout>
 
